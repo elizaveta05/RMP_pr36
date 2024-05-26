@@ -1,16 +1,29 @@
-# This is a sample Python script.
+import kivy
+from kivy.app import App
+kivy.require('1.9.0')
+from kivy.uix.gridlayout import GridLayout
+from kivy.config import Config
+Config.set('graphics', 'resizable', 1)
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+# Определение класса CalcGridLayout, наследуемого от GridLayout
+class CalcGridLayout(GridLayout):
 
+    # Функция вызывается при нажатии на кнопку "равно"
+    def calculate(self, calculation):
+        if calculation:
+            try:
+                # Решаем формулу и выводим результат на экран
+                self.display.text = str(eval(calculation))
+            except Exception:
+                self.display.text = "Ошибка"
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+# Определение класса приложения CalculatorApp, наследуемого от App
+class CalculatorApp(App):
 
+    # Метод build, который будет вызван при запуске приложения
+    def build(self):
+        return CalcGridLayout()
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+# Создание объекта приложения и его запуск
+calcApp = CalculatorApp()
+calcApp.run()
